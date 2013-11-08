@@ -29,8 +29,6 @@ PRODUCT_PACKAGES := \
 	Mms \
 	OpenWnn \
 	PrintSpooler \
-	libWnnEngDic \
-	libWnnJpnDic \
 	libwnndict \
 	TeleService \
 	PinyinIME \
