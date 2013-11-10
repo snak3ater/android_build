@@ -836,8 +836,7 @@ def main(argv):
                                               "extra_script=",
                                               "worker_threads=",
                                               "aslr_mode=",
-                                              "override_device=",
-                                              ],
+                                              "override_device="],
                              extra_option_handler=option_handler)
 
   if len(args) != 2:
