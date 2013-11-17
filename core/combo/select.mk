@@ -47,8 +47,8 @@ $(combo_target)HAVE_STRLCAT := 0
 $(combo_target)HAVE_KERNEL_MODULES := 0
 
 $(combo_target)GLOBAL_CFLAGS := -fno-exceptions -Wno-multichar
-$(combo_target)RELEASE_CFLAGS := -O3 -g -fstrict-aliasing -Wstrict-aliasing=3 -Werror=strict-aliasing
-$(combo_target)GLOBAL_LDFLAGS :=
+$(combo_target)RELEASE_CFLAGS := -Os -fno-tree-vectorize -fno-inline-functions -fno-unswitch-loops -fgcse-after-reload -fipa-cp-clone -fpredictive-commoning -fsched-spec-load -fvect-cost-model -g -Wstrict-aliasing=3 -Werror=strict-aliasing
+$(combo_target)GLOBAL_LDFLAGS := -Wl,-O2
 $(combo_target)GLOBAL_ARFLAGS := crsP
 
 $(combo_target)EXECUTABLE_SUFFIX :=
