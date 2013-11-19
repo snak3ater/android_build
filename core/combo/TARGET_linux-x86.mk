@@ -88,7 +88,7 @@ KERNEL_HEADERS := $(KERNEL_HEADERS_COMMON) $(KERNEL_HEADERS_ARCH)
 android_config_h := $(call select-android-config-h,target_linux-x86)
 
 TARGET_GLOBAL_CFLAGS += \
-			-O3 \
+			-O2 \
 			-Ulinux \
 			-Wa,--noexecstack \
 			-Werror=format-security \
