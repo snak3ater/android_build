@@ -92,7 +92,7 @@ TARGET_thumb_CFLAGS :=  -mthumb \
 			-Wstrict-aliasing=3 \
 			-Werror=strict-aliasing
 
-ifneq ($(filter 4.8 4.8.% 4.9 4.9.%, $(TARGET_GCC_VERSION)),)
+ifneq ($(filter 4.8 4.8.% 4.9 4.9.%, $(TARGET_GCC_VERSION_AND)),)
 TARGET_arm_CFLAGS +=  -Wno-unused-parameter \
                       -Wno-unused-value \
                       -Wno-unused-function
