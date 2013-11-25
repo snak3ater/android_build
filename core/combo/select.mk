@@ -48,7 +48,7 @@ $(combo_target)HAVE_KERNEL_MODULES := 0
 
 $(combo_target)GLOBAL_CFLAGS := -fno-exceptions -Wno-multichar
 $(combo_target)RELEASE_CFLAGS := -O3 -g -Wstrict-aliasing=3 -Werror=strict-aliasing -fstrict-aliasing
-$(combo_target)GLOBAL_LDFLAGS := -Wl,-O3
+$(combo_target)GLOBAL_LDFLAGS :=
 $(combo_target)GLOBAL_ARFLAGS := crsP
 
 $(combo_target)EXECUTABLE_SUFFIX :=
