@@ -48,7 +48,7 @@ PRODUCT_LOCALES := en_US
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi xxhdpi
 
 # Get some sounds
-$(call inherit-product, frameworks/base/data/sounds/AudioPackage10.mk)
+#$(call inherit-product, frameworks/base/data/sounds/AudioPackage10.mk)
 
 # Get the TTS language packs
 $(call inherit-product-if-exists, external/svox/pico/lang/all_pico_languages.mk)
