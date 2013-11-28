@@ -91,6 +91,7 @@ OPTIONS.omit_prereq = False
 OPTIONS.extra_script = None
 OPTIONS.aslr_mode = True
 OPTIONS.worker_threads = 3
+OPTIONS.backuptool = True
 OPTIONS.override_device = 'auto'
 
 def MostPopularKey(d, default):
@@ -437,6 +438,11 @@ def WriteFullOTAPackage(input_zip, output_zip):
   AppendAssertions(script, OPTIONS.info_dict)
   device_specific.FullOTA_Assertions()
   device_specific.FullOTA_InstallBegin()
+  
+  if OPTIONS.backuptool:
+    script.Mount("/system")
+    script.RunBackup("backup")
+    script.Unmount("/system")
 
   script.ShowProgress(0.5, 0)
   script.Print("")
@@ -506,6 +512,10 @@ def WriteFullOTAPackage(input_zip, output_zip):
   common.CheckSize(boot_img.data, "boot.img", OPTIONS.info_dict)
   common.ZipWriteStr(output_zip, "boot.img", boot_img.data)
   script.ShowProgress(0.2, 0)
+  
+  if OPTIONS.backuptool:
+    script.ShowProgress(0.2, 10)
+    script.RunBackup("restore")
 
   script.ShowProgress(0.2, 10)
   script.WriteRawImage("/boot", "boot.img")
