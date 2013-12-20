@@ -80,17 +80,23 @@ TARGET_NO_UNDEFINED_LDFLAGS := -Wl,--no-undefined
 
 TARGET_arm_CFLAGS :=    -O3 \
                         -fomit-frame-pointer \
+                        -fno-tree-vectorize \
+                        -fno-inline-functions \
                         -fstrict-aliasing    \
 			-Wstrict-aliasing=3 \
 			-Werror=strict-aliasing
+
   
 # Modules can choose to compile some source as thumb.
 TARGET_thumb_CFLAGS :=  -mthumb \
-                        -Os \
+                        -O3 \
                         -fomit-frame-pointer \
                         -fstrict-aliasing \
 			-Wstrict-aliasing=3 \
-			-Werror=strict-aliasing
+			-Werror=strict-aliasing \
+                        -fno-tree-vectorize \
+                        -fno-inline-functions \
+                        -fno-unswitch-loops
 
 ifneq ($(filter 4.8 4.8.% 4.9 4.9.%, $(TARGET_GCC_VERSION_AND)),)
 TARGET_arm_CFLAGS +=  -Wno-unused-parameter \
