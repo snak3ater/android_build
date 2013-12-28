@@ -78,22 +78,23 @@ endif
 
 TARGET_NO_UNDEFINED_LDFLAGS := -Wl,--no-undefined
 
-TARGET_arm_CFLAGS :=    -O3 \
+TARGET_arm_CFLAGS :=	-O3 \
                         -fomit-frame-pointer \
-                        -fno-tree-vectorize \
+                        -ftree-vectorize \
                         -fno-inline-functions \
+                        -funswitch-loops \
                         -fstrict-aliasing    \
-			-Wstrict-aliasing=3 \
-			-Werror=strict-aliasing
+                        -Wstrict-aliasing=3 \
+                        -Werror=strict-aliasing
 
   
 # Modules can choose to compile some source as thumb.
-TARGET_thumb_CFLAGS :=  -mthumb \
+TARGET_thumb_CFLAGS :=	-mthumb \
                         -O3 \
                         -fomit-frame-pointer \
                         -fstrict-aliasing \
-			-Wstrict-aliasing=3 \
-			-Werror=strict-aliasing \
+                        -Wstrict-aliasing=3 \
+                        -Werror=strict-aliasing \
                         -fno-tree-vectorize \
                         -fno-inline-functions \
                         -fno-unswitch-loops
@@ -119,8 +120,8 @@ endif
 # with -mlong-calls.  When built at -O0, those libraries are
 # too big for a thumb "BL <label>" to go from one end to the other.
 ifeq ($(FORCE_ARM_DEBUGGING),true)
-  TARGET_arm_CFLAGS += -fno-omit-frame-pointer -fno-strict-aliasing
-  TARGET_thumb_CFLAGS += -marm -fno-omit-frame-pointer
+  TARGET_arm_CFLAGS += -fomit-frame-pointer -fstrict-aliasing
+  TARGET_thumb_CFLAGS += -marm -fomit-frame-pointer
 endif
 
 android_config_h := $(call select-android-config-h,linux-arm)
@@ -135,8 +136,8 @@ TARGET_GLOBAL_CFLAGS += \
 			-Werror=format-security \
 			-D_FORTIFY_SOURCE=2 \
 			-fno-short-enums \
-                        -Wstrict-aliasing=3 \
-                        -Werror=strict-aliasing \
+			-Wstrict-aliasing=3 \
+			-Werror=strict-aliasing \
 			$(arch_variant_cflags) \
 			-include $(android_config_h) \
 			-I $(dir $(android_config_h))
