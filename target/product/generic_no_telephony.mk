@@ -38,6 +38,7 @@ PRODUCT_PACKAGES := \
     PrintSpooler \
     Provision \
     Settings \
+    ScreenRecorder \
     SystemUI \
     TeleService \
     CalendarProvider \
@@ -59,6 +60,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     librs_jni \
+    libscreenrecorder \
     libvideoeditor_jni \
     libvideoeditor_core \
     libvideoeditor_osal \
