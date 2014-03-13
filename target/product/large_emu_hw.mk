@@ -25,6 +25,8 @@ PRODUCT_PACKAGES := \
     Calculator \
     Calendar \
     CertInstaller \
+    Email \
+    Exchange2 \
     Gallery2 \
     LatinIME \
     Launcher2 \
