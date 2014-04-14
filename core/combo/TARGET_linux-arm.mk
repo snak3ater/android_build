@@ -34,21 +34,11 @@ ifeq ($(strip $(TARGET_ARCH_VARIANT)),)
 TARGET_ARCH_VARIANT := armv5te
 endif
 
-ifeq ($(strip $(TARGET_GCC_VERSION_AND)),)
-TARGET_GCC_VERSION_AND := 4.7
+ifeq ($(strip $(TARGET_GCC_VERSION_EXP)),)
+TARGET_GCC_VERSION := 4.7
 else
-TARGET_GCC_VERSION_AND := $(TARGET_GCC_VERSION_AND)
+TARGET_GCC_VERSION := $(TARGET_GCC_VERSION_EXP)
 endif
-
-ifeq ($(strip $(TARGET_GCC_VERSION_ARM)),)
-TARGET_GCC_VERSION_ARM := 4.7
-else
-TARGET_GCC_VERSION_ARM := $(TARGET_GCC_VERSION_ARM)
-endif
-
-# Specify Target Custom GCC Chains to use:
-TARGET_GCC_VERSION_AND := 4.8
-TARGET_GCC_VERSION_ARM := 4.8
 
 TARGET_ARCH_SPECIFIC_MAKEFILE := $(BUILD_COMBOS)/arch/$(TARGET_ARCH)/$(TARGET_ARCH_VARIANT).mk
 ifeq ($(strip $(wildcard $(TARGET_ARCH_SPECIFIC_MAKEFILE))),)
@@ -59,7 +49,7 @@ include $(TARGET_ARCH_SPECIFIC_MAKEFILE)
 
 # You can set TARGET_TOOLS_PREFIX to get gcc from somewhere else
 ifeq ($(strip $(TARGET_TOOLS_PREFIX)),)
-TARGET_TOOLCHAIN_ROOT := prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-linux-androideabi-$(TARGET_GCC_VERSION_AND)
+TARGET_TOOLCHAIN_ROOT := prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-linux-androideabi-$(TARGET_GCC_VERSION)
 TARGET_TOOLS_PREFIX := $(TARGET_TOOLCHAIN_ROOT)/bin/arm-linux-androideabi-
 endif
 
@@ -78,37 +68,16 @@ endif
 
 TARGET_NO_UNDEFINED_LDFLAGS := -Wl,--no-undefined
 
-TARGET_arm_CFLAGS :=	-O3 \
+TARGET_arm_CFLAGS :=    -O2 \
                         -fomit-frame-pointer \
-                        -ftree-vectorize \
-                        -fno-inline-functions \
-                        -funswitch-loops \
                         -fstrict-aliasing    \
-                        -Wstrict-aliasing=3 \
-                        -Werror=strict-aliasing
+                        -funswitch-loops
 
-  
 # Modules can choose to compile some source as thumb.
-TARGET_thumb_CFLAGS :=	-mthumb \
-                        -O3 \
+TARGET_thumb_CFLAGS :=  -mthumb \
+                        -Os \
                         -fomit-frame-pointer \
-                        -fstrict-aliasing \
-                        -Wstrict-aliasing=3 \
-                        -Werror=strict-aliasing \
-                        -fno-tree-vectorize \
-                        -fno-inline-functions \
-                        -fno-unswitch-loops
-
-ifneq ($(filter 4.8 4.8.% 4.9 4.9.%, $(TARGET_GCC_VERSION_AND)),)
-TARGET_arm_CFLAGS +=  -Wno-unused-parameter \
-                      -Wno-unused-value \
-                      -Wno-unused-function
-
-TARGET_thumb_CFLAGS +=  -Wno-unused-parameter \
-                        -Wno-unused-value \
-                        -Wno-unused-function
-endif
-
+                        -fno-strict-aliasing
 
 # Set FORCE_ARM_DEBUGGING to "true" in your buildspec.mk
 # or in your environment to force a full arm build, even for
@@ -120,8 +89,8 @@ endif
 # with -mlong-calls.  When built at -O0, those libraries are
 # too big for a thumb "BL <label>" to go from one end to the other.
 ifeq ($(FORCE_ARM_DEBUGGING),true)
-  TARGET_arm_CFLAGS += -fomit-frame-pointer -fstrict-aliasing
-  TARGET_thumb_CFLAGS += -marm -fomit-frame-pointer
+  TARGET_arm_CFLAGS += -fno-omit-frame-pointer -fno-strict-aliasing
+  TARGET_thumb_CFLAGS += -marm -fno-omit-frame-pointer
 endif
 
 android_config_h := $(call select-android-config-h,linux-arm)
@@ -136,8 +105,6 @@ TARGET_GLOBAL_CFLAGS += \
 			-Werror=format-security \
 			-D_FORTIFY_SOURCE=2 \
 			-fno-short-enums \
-			-Wstrict-aliasing=3 \
-			-Werror=strict-aliasing \
 			$(arch_variant_cflags) \
 			-include $(android_config_h) \
 			-I $(dir $(android_config_h))
@@ -146,11 +113,9 @@ TARGET_GLOBAL_CFLAGS += \
 # We cannot turn it off blindly since the option is not available
 # in gcc-4.4.x.  We also want to disable sincos optimization globally
 # by turning off the builtin sin function.
-ifneq ($(filter 4.6 4.6.% 4.7 4.7.% 4.8 4.8.% 4.9 4.9.%, $(TARGET_GCC_VERSION_AND)),)
-ifneq ($(filter 4.6 4.6.% 4.7 4.7.% 4.8 4.8.% 4.9 4.9.%, $(TARGET_GCC_VERSION_ARM)),)
+ifneq ($(filter 4.6 4.6.% 4.7 4.7.%, $(TARGET_GCC_VERSION)),)
 TARGET_GLOBAL_CFLAGS += -Wno-unused-but-set-variable -fno-builtin-sin \
 			-fno-strict-volatile-bitfields
-endif
 endif
 
 # This is to avoid the dreaded warning compiler message:
@@ -180,8 +145,7 @@ TARGET_GLOBAL_CPPFLAGS += -fvisibility-inlines-hidden
 TARGET_RELEASE_CFLAGS := \
 			-DNDEBUG \
 			-g \
-			-Wstrict-aliasing=3 \
-                        -Werror=strict-aliasing \
+			-Wstrict-aliasing=2 \
 			-fgcse-after-reload \
 			-frerun-cse-after-loop \
 			-frename-registers

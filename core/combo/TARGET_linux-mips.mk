@@ -40,10 +40,6 @@ else
 TARGET_GCC_VERSION := $(TARGET_GCC_VERSION_EXP)
 endif
 
-# Specify Target Custom GCC Chains to use:
-TARGET_GCC_VERSION_AND := 4.8
-TARGET_GCC_VERSION_ARM := 4.8
-
 TARGET_ARCH_SPECIFIC_MAKEFILE := $(BUILD_COMBOS)/arch/$(TARGET_ARCH)/$(TARGET_ARCH_VARIANT).mk
 ifeq ($(strip $(wildcard $(TARGET_ARCH_SPECIFIC_MAKEFILE))),)
 $(error Unknown MIPS architecture variant: $(TARGET_ARCH_VARIANT))
@@ -53,7 +49,7 @@ include $(TARGET_ARCH_SPECIFIC_MAKEFILE)
 
 # You can set TARGET_TOOLS_PREFIX to get gcc from somewhere else
 ifeq ($(strip $(TARGET_TOOLS_PREFIX)),)
-TARGET_TOOLCHAIN_ROOT := prebuilts/gcc/$(HOST_PREBUILT_TAG)/mips/mipsel-linux-android-$(TARGET_GCC_VERSION_AND)
+TARGET_TOOLCHAIN_ROOT := prebuilts/gcc/$(HOST_PREBUILT_TAG)/mips/mipsel-linux-android-$(TARGET_GCC_VERSION)
 TARGET_TOOLS_PREFIX := $(TARGET_TOOLCHAIN_ROOT)/bin/mipsel-linux-android-
 endif
 
@@ -103,11 +99,9 @@ TARGET_GLOBAL_CFLAGS += \
 # This warning causes dalvik not to build with gcc 4.6+ and -Werror.
 # We cannot turn it off blindly since the option is not available
 # in gcc-4.4.x.
-ifneq ($(filter 4.6 4.6.% 4.7 4.7.% 4.8 4.8.% 4.9 4.9.%, $(TARGET_GCC_VERSION_AND)),)
-ifneq ($(filter 4.6 4.6.% 4.7 4.7.% 4.8 4.8.% 4.9 4.9.%, $(TARGET_GCC_VERSION_ARM)),)
+ifneq ($(filter 4.6 4.6.% 4.7 4.7.%, $(TARGET_GCC_VERSION)),)
 TARGET_GLOBAL_CFLAGS += -Wno-unused-but-set-variable \
                         -fno-strict-volatile-bitfields
-endif
 endif
 
 # This is to avoid the dreaded warning compiler message:

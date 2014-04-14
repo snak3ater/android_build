@@ -6,14 +6,18 @@ ARCH_ARM_HAVE_VFP               := true
 ARCH_ARM_HAVE_VFP_D32           := true
 ARCH_ARM_HAVE_NEON              := true
 
-ifeq ($(strip $(TARGET_CPU_VARIANT)),krait)
-    arch_variant_cflags := -mcpu=cortex-a15
+ifeq ($(strip $(TARGET_CPU_VARIANT)), cortex-a15)
+	arch_variant_cflags := -mcpu=cortex-a15
 else
-    arch_variant_cflags := -mcpu=$(TARGET_CPU_VARIANT)
+ifeq ($(strip $(TARGET_CPU_VARIANT)),cortex-a8)
+	arch_variant_cflags := -mcpu=cortex-a8
+else
+ifeq ($(strip $(TARGET_CPU_VARIANT)),cortex-a7)
+	arch_variant_cflags := -mcpu=cortex-a7
+else
+	arch_variant_cflags := -march=armv7-a
 endif
-
-ifneq ($(TARGET_CPU_VARIANT),$(filter $(TARGET_CPU_VARIANT),cortex-a7 cortex-a8 cortex-a9 cortex-a15 krait))
-    arch_variant_cflags := -march=armv7-a
+endif
 endif
 
 arch_variant_cflags += \

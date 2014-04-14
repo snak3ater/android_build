@@ -11,27 +11,27 @@ endif
 
 # Add the ARM toolchain bin dir if it actually exists
 ifeq ($(TARGET_ARCH),arm)
-    ifneq ($(wildcard $(PWD)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-linux-androideabi-$(TARGET_GCC_VERSION_AND)/bin),)
+    ifneq ($(wildcard $(PWD)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-linux-androideabi-$(TARGET_GCC_VERSION)/bin),)
         # this should be copied to HOST_OUT_EXECUTABLES instead
-        ABP:=$(ABP):$(PWD)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-linux-androideabi-$(TARGET_GCC_VERSION_AND)/bin
+        ABP:=$(ABP):$(PWD)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-linux-androideabi-$(TARGET_GCC_VERSION)/bin
     endif
-    ifneq ($(wildcard $(PWD)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-eabi-$(TARGET_GCC_VERSION_ARM)/bin),)
+    ifneq ($(wildcard $(PWD)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-eabi-$(TARGET_GCC_VERSION)/bin),)
         # this should be copied to HOST_OUT_EXECUTABLES instead
-        ABP:=$(ABP):$(PWD)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-eabi-$(TARGET_GCC_VERSION_ARM)/bin
+        ABP:=$(ABP):$(PWD)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-eabi-$(TARGET_GCC_VERSION)/bin
     endif
 else ifeq ($(TARGET_ARCH),x86)
 
 # Add the x86 toolchain bin dir if it actually exists
-    ifneq ($(wildcard $(PWD)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/x86/i686-linux-android-$(TARGET_GCC_VERSION_AND)/bin),)
+    ifneq ($(wildcard $(PWD)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/x86/i686-linux-android-$(TARGET_GCC_VERSION)/bin),)
         # this should be copied to HOST_OUT_EXECUTABLES instead
-        ABP:=$(ABP):$(PWD)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/x86/i686-linux-android-$(TARGET_GCC_VERSION_AND)/bin
+        ABP:=$(ABP):$(PWD)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/x86/i686-linux-android-$(TARGET_GCC_VERSION)/bin
     endif
 endif
 
 # Add the mips toolchain bin dir if it actually exists
-ifneq ($(wildcard $(PWD)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/mips/mipsel-linux-android-$(TARGET_GCC_VERSION_AND)/bin),)
+ifneq ($(wildcard $(PWD)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/mips/mipsel-linux-android-$(TARGET_GCC_VERSION)/bin),)
     # this should be copied to HOST_OUT_EXECUTABLES instead
-    ABP:=$(ABP):$(PWD)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/mips/mipsel-linux-android-$(TARGET_GCC_VERSION_AND)/bin
+    ABP:=$(ABP):$(PWD)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/mips/mipsel-linux-android-$(TARGET_GCC_VERSION)/bin
 endif
 
 ANDROID_BUILD_PATHS := $(ABP)
@@ -99,13 +99,6 @@ $(info   TARGET_BUILD_APPS=$(TARGET_BUILD_APPS))
 $(info   TARGET_ARCH=$(TARGET_ARCH))
 $(info   TARGET_ARCH_VARIANT=$(TARGET_ARCH_VARIANT))
 $(info   TARGET_CPU_VARIANT=$(TARGET_CPU_VARIANT))
-$(info   TARGET_ARCH_VARIANT_CPU=$(TARGET_ARCH_VARIANT_CPU))
-$(info   TARGET_ARCH_VARIANT_FPU=$(TARGET_ARCH_VARIANT_FPU))
-$(info   TARGET_GCC_VERSION_ROM=$(TARGET_GCC_VERSION_AND))
-$(info   TARGET_GCC_VERSION_KERNEL=$(TARGET_GCC_VERSION_ARM))
-$(info   GLOBAL_ENABLE_GRAPHITE=$(GLOBAL_ENABLE_GRAPHITE))
-$(info   TARGET_USE_KRAIT_BIONIC_OPTIMIZATIONS=$(TARGET_USE_KRAIT_BIONIC_OPTIMIZATION))
-$(info   ARCH_ARM_HIGH_OPTIMIZATION=$(ARCH_ARM_HIGH_OPTIMIZATION))
 $(info   HOST_ARCH=$(HOST_ARCH))
 $(info   HOST_OS=$(HOST_OS))
 $(info   HOST_OS_EXTRA=$(HOST_OS_EXTRA))
