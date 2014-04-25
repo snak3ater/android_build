@@ -34,7 +34,9 @@ PRODUCT_PACKAGES := \
     LatinIME \
     Launcher2 \
     MusicFX \
+    OneTimeInitializer \
     PrintSpooler \
+    Provision \
     Settings \
     ScreenRecorder \
     SystemUI \
