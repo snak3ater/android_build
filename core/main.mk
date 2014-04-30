@@ -313,7 +313,7 @@ ifneq (,$(user_variant))
   ifneq (true,$(DISABLE_DEXPREOPT))
     ifeq ($(user_variant),user)
       ifeq ($(HOST_OS),linux)
-        WITH_DEXPREOPT := true
+        WITH_DEXPREOPT := false
       endif
     endif
   endif
