@@ -42,7 +42,7 @@ ifeq "" "$(PLATFORM_VERSION)"
   # Update this value when the platform version changes (rather
   # than overriding it somewhere else).  Can be an arbitrary string.
 
-  PLATFORM_VERSION := 4.4.3
+  PLATFORM_VERSION := 4.4.4
 endif
 
 ifeq "" "$(PLATFORM_SDK_VERSION)"
